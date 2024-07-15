@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "teemo"
+version = "0.1.0"
+description = "Teemo - Riven FileSystem Watcher and Webdav Mounter"
+authors = ["iPromKnight"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+watchdog = "^4.0.1"
+loguru = "^0.7.2"
+rich = "^13.7.1"
+pydantic = "^2.8.2"
+pytest = "^8.2.2"
+pyfakefs = "^5.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
