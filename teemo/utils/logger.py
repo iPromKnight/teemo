@@ -2,7 +2,7 @@
 
 import sys
 from loguru import logger
-from src.settings.manager import settings_manager
+from settings.manager import settings_manager
 from rich.console import Console
 
 
@@ -14,7 +14,6 @@ def setup_logger(level):
     logger.level("CRITICAL", icon="")
     logger.level("SUCCESS", icon="✔️ ")
 
-    # Log format to match the old log format, but with color
     log_format = (
         "<fg #818589>{time:YY-MM-DD} {time:HH:mm:ss}</fg #818589> | "
         "<level>{level.icon}</level> <level>{level: <9}</level> | "
@@ -29,14 +28,7 @@ def setup_logger(level):
             "backtrace": False,
             "diagnose": False,
             "enqueue": True,
-        },
-        {
-            "sink": sys.stdout,
-            "level": level, 
-            "format": log_format,
-            "backtrace": False,
-            "diagnose": False,
-            "enqueue": True,
+            "colorize": True
         }
     ])
 

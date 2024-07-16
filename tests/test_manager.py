@@ -1,8 +1,8 @@
 import pytest
 import json
 from unittest.mock import patch, mock_open, MagicMock
-from src.settings.manager import SettingsManager
-from src.settings.models import TeemoModel
+from teemo.settings.manager import SettingsManager
+from teemo.settings.models import TeemoModel
 
 @pytest.fixture
 def settings_manager():

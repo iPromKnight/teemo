@@ -1,0 +1,34 @@
+networks:
+  teemo:
+    driver: bridge
+
+services:
+  teemo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: teemo
+    networks:
+      - teemo
+    volumes:
+      - ./data/teemo:/teemo/data
+      - ./data/mnt:/mnt
+    restart: unless-stopped
+
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - VERSION=docker
+      - PLEX_CLAIM=
+    networks:
+      - teemo
+    ports:
+      - 32400:32400
+    volumes:
+      - ./data/plex:/config
+      - ./data/mnt:/mnt
+    restart: unless-stopped

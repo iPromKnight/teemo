@@ -3,8 +3,8 @@ import os
 
 from pydantic import ValidationError
 
-from src.settings.models import Observable, TeemoModel
-from src.utils import data_dir_path
+from settings.models import Observable, TeemoModel
+from utils import data_dir_path
 from loguru import logger
 
 
@@ -57,7 +57,7 @@ class SettingsManager:
                 else:
                     checked_settings[key] = value
         return checked_settings
-    
+
     def load(self, settings_dict: dict | None = None):
         """Load settings from file, validating against the AppModel schema."""
         try:
@@ -67,6 +67,7 @@ class SettingsManager:
                     if os.environ.get("TEEMO_FORCE_ENV", "false").lower() == "true":
                         settings_dict = self.check_environment(settings_dict, "TEEMO")
             self.settings = TeemoModel.model_validate(settings_dict)
+            self.save()
         except ValidationError as e:
             logger.error(f"Error validating settings: {e}")
             raise
@@ -79,6 +80,8 @@ class SettingsManager:
         self.notify_observers()
 
     def save(self):
+        if dir(self.settings_file) and not self.settings_file.parent.exists():
+            self.settings_file.parent.mkdir(parents=True)
         with open(self.settings_file, "w", encoding="utf-8") as file:
             file.write(self.settings.model_dump_json(indent=4))
 
