@@ -32,6 +32,11 @@ class PlexLibraryModel(Observable):
     token: str = ""
     url: str = "http://localhost:32400"
 
+class AudiobookShelfLibraryModel(Observable):
+    enabled: bool = False
+    token: str = ""
+    url: str = "http://localhost:13378"
+    folder_to_library_id: Dict[str, str] = {}
 
 class FileMonitorSettings(Observable):
     library_paths: List[str] = ["movies", "shows"]
